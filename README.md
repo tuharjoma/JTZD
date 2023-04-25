@@ -10,3 +10,6 @@ Telepítés:
   Használat:
   1. Backend indítása: npm start
   2.Frontend indítása: index.html-t nyissuk meg egy böngészőben
+  
+  
+  
