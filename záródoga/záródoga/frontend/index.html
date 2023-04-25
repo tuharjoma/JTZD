@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="utf-8">
+    <title>Register/Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./node_modules\bootstrap\dist\css\bootstrap.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="./js/main.js"></script>
+    <script src="./node_modules\bootstrap\dist\js\bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <!-- Gombok -->
+    <div class="p-2 text-center">
+        <button type="button" class="btn btn-light" data-bs-toggle="modal"
+            data-bs-target="#registration">Regisztráció</button>
+        <button type="button" class="btn btn-light" data-bs-toggle="modal"
+            data-bs-target="#login">Bejelentkezés</button>
+    </div>
+
+    <!-- Regisztráció -->
+    <div class="modal fade" id="registration" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Regisztráció</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Felhasználó név</label>
+                    <input class="form-control" type="text" name="regUsername" id="regUsername" required>
+                    <label class="form-label">Jelszó</label>
+                    <input class="form-control" type="password" name="regPassword1" id="regPassword1" required>
+                    <label class="form-label">Jelszó újra</label>
+                    <input class="form-control" type="password" name="regPassword2" id="regPassword2" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="registration()">Ok</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bejelentkezés -->
+    <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Bejelentkezés</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Felhasználó név</label>
+                    <input class="form-control" type="text" name="logUsername" id="logUsername" required>
+                    <label class="form-label">Jelszó</label>
+                    <input class="form-control" type="password" name="logPassword" id="logPassword" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="login()">Ok</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Bezárás</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

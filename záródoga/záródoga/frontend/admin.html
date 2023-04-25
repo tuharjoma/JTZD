@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./node_modules\bootstrap\dist\css\bootstrap.min.css">
+    <link rel="stylesheet" href="./css/admin.css">
+    <script src="./js/main.js"></script>
+    <script src="./node_modules\bootstrap\dist\js\bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <script>
+        window.onload = function () {
+            load();
+            cardDatas();
+        };
+    </script>
+    <div class="container-fluid tarolo">
+        <div class="offcanvas offcanvas-start" id="demo">
+            <div class="offcanvas-header menu">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body menu">
+                <div class="menu" id="menuSor">
+                    <div class="p-2">
+                        <h3 id="loggedInUser" class="ms-auto"></h3>
+                    </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-primary w-50" data-bs-toggle="modal"
+                            data-bs-target="#newCarModal">Új
+                            autó felvétele</button>
+                    </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-primary w-50" data-bs-toggle="modal"
+                            data-bs-target="#changePassword">Jelszó
+                            módosítása</button>
+                    </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-primary w-50" onclick="carRental()">Kölcsönzések</button>
+                    </div>
+                    <div class="p-2">
+                        <h4>Keresés típusa</h4>
+                        <select class="form-select" aria-label="Default select example" name="searchType"
+                            id="searchType">
+                            <option selected value="1">Márka</option>
+                            <option value="2">Típus</option>
+                            <option value="3">Évjárat</option>
+                            <option value="4">Szabad</option>
+                        </select>
+                    </div>
+                    <div class="p-2">
+                        <input type="text" class="form-control" id="searchingField" onkeyup="cardDatas()">
+                    </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-danger order-3 w-50" onclick="logout()">Kijelentkezés</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between m-2">
+            <button class="btn btn-primary m-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+                Menu
+            </button>
+        </div>
+
+        <div class="col-md-12">
+            <div class="row" id="carCard">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- új autó felvitele modal -->
+    <div class="modal fade" id="newCarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Új autó felvétele</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label text-decoration-underline">Márka</label>
+                            <input class="form-control mb-3" type="text" name="newBrand" id="newBrand" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-decoration-underline">Típus</label>
+                            <input class="form-control mb-3" type="text" name="newType" id="newType" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-decoration-underline">Évjárat</label>
+                            <input class="form-control mb-3" type="text" name="newYear" id="newYear" required>
+                        </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-decoration-underline">Kép feltöltése</label>
+                            <input class="form-control" type="file" name="newPicture" id="newPicture" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="newCar()">Ok</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                onclick="newCarCancel()">Mégse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jelszó módosítása modal -->
+    <div class="modal fade" id="changePassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Jelszó módosítása</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Új jelszó</label>
+                    <input class="form-control" type="password" name="newPassword" id="newPassword" required>
+                    <label class="form-label">Új jelszó megerősítése</label>
+                    <input class="form-control" type="password" name="newPassword2" id="newPassword2" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="passwordChange()">Ok</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                        onclick="passwordChangeCancel()">Mégse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Autó adatainak módosítása modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Autó szerkesztése</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="edit-marka" class="form-label text-decoration-underline">Márka:</label>
+                            <input type="text" class="form-control" name="editBrand" id="editBrand">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-tipus" class="form-label text-decoration-underline">Típus:</label>
+                            <input type="text" class="form-control" name="editType" id="editType">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-tipus" class="form-label text-decoration-underline">Évjárat:</label>
+                            <input type="text" class="form-control" name="editYear" id="editYear">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Kép feltöltése</label>
+                            <input class="form-control" type="file" name="editPicture" id="editPicture" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="updateCar()">Mentés</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                        onclick="updateCarCancel()">Mégse</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
