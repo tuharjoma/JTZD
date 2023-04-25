@@ -1,0 +1,2 @@
+# JTZD
+Záródolgozat
